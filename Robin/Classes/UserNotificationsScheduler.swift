@@ -21,6 +21,7 @@
 //
 
 import UserNotifications
+import MobileCoreServices
 
 @available(iOS 10.0, *)
 internal class UserNotificationsScheduler: Scheduler {    
@@ -87,6 +88,27 @@ internal class UserNotificationsScheduler: Scheduler {
         content.userInfo                           = notification.userInfo
         
         content.badge                              = notification.badge
+        
+        content.categoryIdentifier                 =
+            notification.categoryIdentifier ?? ""
+        
+        var attachments: [UNNotificationAttachment] = []
+        
+        if let _urls = notification.attachmentUrls  {
+            for _url in _urls {
+                do {
+                    print(_url)
+                    let a = try UNNotificationAttachment(identifier: notification.identifier,
+                                                 url: _url,
+                                                 options: [UNNotificationAttachmentOptionsTypeHintKey : kUTTypePNG])
+                    attachments.append(a)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        content.attachments = attachments
         
         let trigger: UNCalendarNotificationTrigger = self.trigger(forDate: notification.date, repeats: notification.repeats)
         

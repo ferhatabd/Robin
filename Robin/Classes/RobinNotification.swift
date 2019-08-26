@@ -43,6 +43,9 @@ public class RobinNotification: NSObject {
     /// The body string of the notification.
     public var body: String!
     
+    /// Category identifier of the notification
+    public var categoryIdentifier: String?
+    
     /// The date in which the notification is set to fire on.
     public var date: Date! {
         didSet {
@@ -65,6 +68,8 @@ public class RobinNotification: NSObject {
     /// The repeat interval of the notification.
     public var repeats: Repeats                = .none
     
+    internal var attachmentUrls: [URL]?
+  
     /// The status of the notification.
     internal(set) public var scheduled: Bool   = false
     
@@ -96,10 +101,11 @@ public class RobinNotification: NSObject {
         return result
     }
     
-    public init(identifier: String = UUID().uuidString, body: String, date: Date = Date().next(hours: 1)) {
+    public init(identifier: String = UUID().uuidString, body: String, date: Date = Date().next(hours: 1), categoryIdentifier ident: String?=nil) {
         self.identifier = identifier
         self.body = body
         self.date = date
+        self.categoryIdentifier = ident
         self.userInfo = [
             RobinNotification.identifierKey : self.identifier,
             RobinNotification.dateKey : self.date
@@ -139,6 +145,14 @@ public class RobinNotification: NSObject {
         }
         self.userInfo.removeValue(forKey: key)
     }
+    
+    /// Method that sets the attachmentURLs of the notification
+    ///
+    /// - Parameter urls: URLs to be used
+    public func setAttachmentUrls(_ urls: URL...) {
+        attachmentUrls = urls
+    }
+    
 }
 
 public func ==(lhs: RobinNotification, rhs: RobinNotification) -> Bool {

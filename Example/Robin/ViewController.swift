@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Robin
 
 class ViewController: UIViewController {
+    
+    let noti = RobinNotification(body: "test notification", date: Date().next(minutes: 2))
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Robin.shared.requestAuthorization(forOptions: [.alert, .badge, .sound])
+        
         // Do any additional setup after loading the view, typically from a nib.
+        _ = Robin.shared.schedule(notification: noti)
     }
 
     override func didReceiveMemoryWarning() {

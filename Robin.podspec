@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/ahmedabadie/Robin'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'ahmedabadie' => 'badie.ahmed@icloud.com' }
-  s.source           = { :git => 'https://github.com/ahmedabadie/Robin.git', :tag => s.version.to_s }
+  s.source           = { :path => "/Users/abdullahoglu/Desktop/Projects/Frameworks/DKListKit/DKListKit", :tag => "#{spec.version}" }
   s.social_media_url = 'https://twitter.com/ahmedabadie'
 
   s.ios.deployment_target = '8.0'
